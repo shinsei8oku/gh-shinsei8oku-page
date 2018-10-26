@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="keyword" content="シンセー,シンセー八億,株式会社新清,新清">
+    <meta http-equiv="description" content="株式会社新清のホームページです">
+    <meta http-equiv="robots" content="all">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    
+    <title>株式会社 新清</title>
+    <!--CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--JS -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--自作CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+        <!--　▼ ヘッダー　 -->
+    <div id=app>
+        <header>
+            <a href="index.html" title="株式会社 新清"><img src="img/top.jpg" alt="株式会社 新清" class="img-responsive"></a>
+            
+            <nav class="navbar navbar-default" role="navigation">
+                <div  class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <span class="navbar-brand visible-xs">メニュー</span>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul id=app_menu class="nav navbar-nav">
+                        
+                            <li v-for="grocery in groceryItems">
+                                <a :href="'index.html#' + grocery.textEn" :title="grocery.textJa">
+                                    {{ grocery.textJa }}<br/><span>{{ grocery.textEn }}</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!--　▲ ヘッダー　 -->
+    
+        <!--　▼ カルーセル　 -->
+        <div id=app_carousel class="container">
+            <span v-if="seen_carousel">
+                <aside id="my-carousel" class="carousel slide" data-ride="carousel" data-interval="8000">
+                    <ol class="carousel-indicators">
+                        <li data-target="#my-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#my-carousel" data-slide-to="1" class=""></li>
+                        <li data-target="#my-carousel" data-slide-to="2" class=""></li>
+                    </ol>
+                    <div class="carousel-inner">
+                    
+                        <div v-for="image in imgItems" :class="image.activItem"><img :alt="image.title" :src="'./img/'+ image.fileName" ></div>
+    
+                    </div>
+                    <a class="left carousel-control" href="#my-carousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#my-carousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </aside>
+            </span>
+        </div>
+        <!--　▲ カルーセル　 -->
+
+        <!--　▼ コンテンツ　 -->
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row">
+                    <div id=app_news class="col-sm-9 col-md-9">
+                        <section  class="news">
+                            <h2>更新情報・お知らせ</h2>
+                            <dl >
+                                <news-item v-for="item in newsItems" :news="item"></news-item>
+                            </dl>
+                        </section>
+                        <section>
+                            <h2>必ずお読み下さい</h2>
+                            <span false><p>当テンプレートは <a href="https://www.saka-en.com/" title="ホームページ制作のサカエン">ホームページ制作のサカエン</a> 
+                            が <a href="http://getbootstrap.com/" title="Bootstrap · The world's most popular mobile-first and responsive front-end framework." rel="nofollow">Bootstrap</a> 
+                            3.3.4 で作った「コーポレートサイト向けホームページテンプレート」です。情報の掲載には細心の注意を払っておりますが、
+                            完全性等について保証を行うものではありませんので予めご了承ください。</p></span>
+                        </section>
+                        <section>
+                            <h2>レスポンシブWEBデザイン</h2>
+                            <p>当テンプレートは レスポンシブWEBデザイン(html5+CSS3) です。パソコン、タブレット、スマートフォンに対応しています。尚、新しいブラウザ(IEならIE8以降)でないと全ての効果を確認する事はできません。詳しくは <a href="http://getbootstrap.com/" title="Bootstrap · The world's most popular mobile-first and responsive front-end framework." rel="nofollow">Bootstrap</a> 公式サイトにて確認ください。</p>
+                        </section>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <nav class="sidebar">
+                            <h3>店舗情報</h3>
+                            <ul id=app_store class="submenu">
+                                <store-item v-for="item in storeItems" :store="item"></store-item>
+                        
+                            </ul>
+                        </nav>
+                        <nav class="sidebar">
+                        <h3>関連情報</h3>
+                        <ul class="submenu">
+                         <li><a href="#">関連記事リンク１</a></li>
+                         <li><a href="#">関連記事リンク２</a></li>
+                         <li><a href="#">関連記事リンク３</a></li>
+                         <li><a href="#">関連記事リンク４</a></li>
+                         <li><a href="#">関連記事リンク５</a></li>
+                        </ul>
+                       </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--　▲ コンテンツ　 -->
+    
+        <!--　▼ フッダー　 -->
+        <footer>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-8 col-md-9">
+                        <ul class="navbar-nav list-inline">
+                            <li><a href="index.html">ホーム</a></li>
+                            <li><a href="#">会社概要</a></li>
+                            <li><a href="#">サービス</a></li>
+                            <li><a href="#">採用情報</a></li>
+                            <li><a href="#">お問い合わせ</a></li>
+                            <li><a href="#">サイトマップ</a></li>
+                            <li><a href="#">プライバシーポリシー</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <address>
+                            <dl>
+                                <dt>Bootstrapで作るレスポンシブWEBデザイン</dt>
+                                <dd>〒131-0000 東京都墨田区押上0-1-2</dd>
+                                <dd>Tel 03-1234-5678 Fax 03-1234-5678</dd>
+                                <dd>東京スカイツリー駅より徒歩1分</dd>
+                                <dd>月～金　AM 9:00 ～ PM 5:00 日曜・祝日定休</dd>
+                            </dl>
+                        </address>
+                    </div>
+                </div>
+            </div> 
+            <div class="copyright"> 
+                Copyright &copy;  All rights reserved.
+            </div>
+        </footer>
+        <!--　▲ フッダー　 -->
+    </dev>
+
+    <script src="index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

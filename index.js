@@ -21,7 +21,7 @@ Vue.component('news-item', {
 // 会社概要をレンダリング
 Vue.component('company-item', {
     props: ['company',],
-    template: '<table class="table"><tbody><tr v-for="(value, key) in company"><td>{{ key }}</td><td>{{ value }}</td></tr></tbody></table>'
+    template: '<table class="table"><tbody><tr v-for="(value, key) in company"><td>{{ key }}</td><td><p v-for="text in value">{{ text }}</p></td></tr></tbody></table>'
 })
 
 // 会社沿革をレンダリング
@@ -31,11 +31,37 @@ Vue.component('history-item', {
     template: '<dev><dt><time :datetime="history.yearMonth">{{ history.yearMonth }}</time></dt><dd>{{ history.text }}</dd></dev>'
 })
 
+// 経営理念・社訓をレンダリング
+Vue.component('motto-item', {
+    props: ['motto',],
+    template: '<table class="table"><tbody><tr v-for="(value, key) in motto"><td>【{{ key }}】</td><td><p v-for="text in value">一、{{ text }}</p></td></tr></tbody></table>'
+})
+
 // 求人情報をレンダリング
 Vue.component('recrit-item', {
     props: ['recrit'],
-    template: '<table class="table"><tbody><tr v-for="(value, key) in recrit"><td>{{ key }}</td><td>{{ value }}</td></tr></tbody></table>'
+    template: '<table class="table"><tbody><tr v-for="(value, key) in recrit">'+
+              '<td>{{ key }}</td><td><p v-for="text in value">{{ text }}</p></td></tr></tbody></table>'
 })
+
+// 店舗情報をレンダリング
+Vue.component('shop-item', {
+    props: ['shop'],
+    template: '<div class="row"><table class="table table-striped">' +
+              '<thead><tr><th>#</th><th>内容</th></tr></thead>' +
+              '<tbody><tr v-for="(value, key) in shop"><td>{{ key }}</td><td><p v-for="text in value">{{ text }}</p></td></tr></tbody>' +
+              '</table></div>'                                          
+})
+
+// カルーセルをレンダリング
+Vue.component('carousel-item', {
+    props: ['carousel'],
+    template: '<div  :class="\'item \'+ carousel.activItem">' +
+              '<img :alt="carousel.title" :src="\'./img/\'+ carousel.fileName" class="img-rounded">' +
+              '<div class="carousel-caption"><h1>{{ carousel.title }}</h1><p>{{ carousel.text }}</p></div>' +
+              '</div>'
+})
+
 
 /* *******************************************************************
    カルーセルの画像の変更はこちら
@@ -44,11 +70,11 @@ Vue.component('recrit-item', {
      - title：タイトルです。適当に入れてください。
 ******************************************************************* */
 var img_items = [
-    { fileName: 'atsugi.jpg', activItem: 'active', title: 'First slide' },
-    { fileName: 'atsugislot.jpg', activItem: '', title: 'Second slide'  },
-    { fileName: 'atsugislot.jpg', activItem: '', title: 'Second slide'  },
-    { fileName: 'atsugislot.jpg', activItem: '', title: 'Second slide'  },
-    { fileName: 'hiratsuka1.jpg', activItem: '', title: 'Third slide'  }
+    { fileName: 'mise.jpg', activItem: 'active', title: 'First slide', text: 'aaa' },
+    { fileName: 'mise2.jpg', activItem: '', title: 'Second slide', text: 'aaa'   },
+    { fileName: 'mise3.jpg', activItem: '', title: 'Second slide', text: 'aaa'   },
+    { fileName: 'mise4.jpg', activItem: '', title: 'Second slide', text: 'aaa'   },
+    { fileName: 'mise5.jpg', activItem: '', title: 'Third slide', text: 'aaa'   }
 ]
 
 /* *******************************************************************
@@ -100,48 +126,48 @@ var store_items = [
 ******************************************************************* */
 var store_objects = {
     atsugi1: {
-        店舗:       '厚木店',
-        電話:       '046-245-3311',
-        住所:       '神奈川県厚木市下川入17-1',
-        交通:       '本厚木駅から車で20分国道129号線山際交差点すぐ近く',
-        設置台数:   'CR：304台',
-        定休日:     '無し' ,
-        営業形態:   '全台無制限',
-        営業時間:   '9：00～23：00',
-        駐車場台数: '230台'
+        店舗:       ['厚木店'],
+        電話:       ['046-245-3311'],
+        住所:       ['神奈川県厚木市下川入17-1'],
+        交通:       ['本厚木駅から車で20分国道129号線山際交差点すぐ近く'],
+        設置台数:   ['CR：304台'],
+        定休日:     ['無し'] ,
+        営業形態:   ['全台無制限'],
+        営業時間:   ['9：00～23：00'],
+        駐車場台数: ['230台']
     },
     atsugi2: {
-        店舗:       '厚木スロット店',
-        電話:       '046-245-6806',
-        住所:       '神奈川県厚木市下川入13-1',
-        交通:       '本厚木駅',
-        設置台数:   'CR：304台',
-        定休日:     '無し' ,
-        営業形態:   '全台無制限',
-        営業時間:   '9：00～23：00',
-        駐車場台数: '230台'
+        店舗:       ['厚木スロット店'],
+        電話:       ['046-245-6806'],
+        住所:       ['神奈川県厚木市下川入13-1'],
+        交通:       ['本厚木駅から車で20分国道129号線山際交差点すぐ近く'],
+        設置台数:   ['CR：304台'],
+        定休日:     ['無し'] ,
+        営業形態:   ['全台無制限'],
+        営業時間:   ['9：00～23：00'],
+        駐車場台数: ['230台']
     },
     hiratsuka: {
-        店舗:       '平塚店',
-        電話:       '0463-24-2678',
-        住所:       '神奈川県平塚市四之宮2-4-16',
-        交通:       '本厚木駅',
-        設置台数:   'CR：304台',
-        定休日:     '無し' ,
-        営業形態:   '全台無制限',
-        営業時間:   '9：00～23：00',
-        駐車場台数: '230台'
+        店舗:       ['平塚店'],
+        電話:       ['0463-24-2678'],
+        住所:       ['神奈川県平塚市四之宮2-4-16'],
+        交通:       ['本厚木駅'],
+        設置台数:   ['CR：304台'],
+        定休日:     ['無し'] ,
+        営業形態:   ['全台無制限'],
+        営業時間:   ['9：00～23：00'],
+        駐車場台数: ['230台']
     },
     minamiashigara: {
-        店舗:       '南足柄店',
-        電話:       '0465-74-4141',
-        住所:       '神奈川県南足柄市飯沢43-1',
-        交通:       '本厚木駅',
-        設置台数:   'CR：304台',
-        定休日:     '無し' ,
-        営業形態:   '全台無制限',
-        営業時間:   '9：00～23：00',
-        駐車場台数: '230台'
+        店舗:       ['南足柄店'],
+        電話:       ['0465-74-4141'],
+        住所:       ['神奈川県南足柄市飯沢43-1'],
+        交通:       ['本厚木駅'],
+        設置台数:   ['CR：304台'],
+        定休日:     ['無し'] ,
+        営業形態:   ['全台無制限'],
+        営業時間:   ['9：00～23：00'],
+        駐車場台数: ['230台']
     }
 }
 
@@ -149,12 +175,17 @@ var store_objects = {
    会社概要の変更はこちら
 ******************************************************************* */
 var company_object = {
-    本部名称: '本部事務センター',
-    本部所在地: '神奈川県小田原市南鴨宮3-12-4 新清第8ビル3階',
-    本部電話: '0465-34-1155',
-    事業内容: '遊技場の経営、不動産賃貸業',
-    役員: '代表取締役社長 大塚 光二',
-    従業員数: '143名（男性: 66名, 女性: 77名, 内、パートアルバイト・嘱託105名）'
+    本部名称:   ['本部事務センター'],
+    本部所在地: ['神奈川県小田原市南鴨宮3-12-4',
+                 ' 新清第8ビル3階'],
+    本部電話:   ['0465-34-1155'],
+    事業内容:   ['遊技場の経営',
+                 '不動産賃貸業'],
+    役員:       ['代表取締役社長 大塚 光二'],
+    従業員数:   ['143名',
+                 ' 男性: 66名',
+                 ' 女性: 77名', 
+                 '内、パートアルバイト・嘱託105名）']
 }
 
 var history_items = [
@@ -182,18 +213,63 @@ var history_items = [
     { yearMonth: '2018/09', text: 'パチンコ『シンセー八億』田村店閉店' }
 ]
 
+/* *******************************************************************
+   求人情報の変更はこちら
+******************************************************************* */
 var recrit_object = {
-    募集: '1. 準社員、2. パート・アルバイト',
-    業務内容: 'パチンコ店スタッフ',
-    資格: '18歳～30歳位迄',
-    勤務地: 'シンセー八億厚木店・平塚店・南足柄店のいずれか',
-    勤務時間: '２交代制（早番：8:30～16:30、遅番：16:00～24:00）',
-    給与: '1. 準社員 基本時給：1,500円、深夜時給（22:00以降）：1,875円</br>2. パート・アルバイト 基本時給：1,200円、深夜時給（22:00以降）：1,500円',
-    待遇: '交通費支給、各種社会保険制度有り、制服貸与',
-    寮設備: 'ワンルーム寮（約10畳／バス・ウォシュレット付トイレ・エアコン・BS内蔵28インチテレビ・冷蔵庫・寝具・駐車場付）',
-    休日: '1. 準社員（6日／月・交替制）2. パート・アルバイト（応相談・交替制）',
-    応募方法: '勤務希望店に電話連絡の後、履歴書持参にてご来店ください。（当ホームページを見てきた事を告げて下さい。）',
-    連絡先: '厚木店：TEL 046-245-3311 採用担当者</br>平塚店：TEL 0463-24-1177 採用担当者</br>南足柄店：TEL 0465-74-4141 採用担当者'
+    募集:       ['a. 準社員', 
+                 'b. パート・アルバイト'],
+    業務内容:   ['パチンコ店スタッフ'],
+    資格:       ['18歳～30歳位迄'],
+    勤務地:     ['シンセー八億厚木店・平塚店・南足柄店のいずれか'],
+    勤務時間:   ['２交代制', 
+                 ' ※ 早番：8:30～16:30 遅番：16:00～24:00）'],
+    給与:       ['a. 準社員 基本時給：1,500円', 
+                 '  -  深夜時給（22:00以降）：1,875円', 
+                 'b. パート・アルバイト 基本時給：1,200円', 
+                 '  -  深夜時給（22:00以降）：1,500円'],
+    待遇:       [ '交通費支給', 
+                  '各種社会保険制度有り',
+                  '制服貸与'],
+    寮設備:     [ 'ワンルーム寮',
+                  ' ※ 約10畳／バス・ウォシュレット付トイレ・エアコン・BS内蔵28インチテレビ・冷蔵庫・寝具・駐車場付'],
+    休日:       [ 'a. 準社員（6日／月・交替制', 
+                  'b. パート・アルバイト（応相談・交替制）'],
+    応募方法:   [ '勤務希望店に電話連絡の後、履歴書持参にてご来店ください。', 
+                  '（当ホームページを見てきた事を告げて下さい。）'],
+    連絡先:     [ '厚木店：TEL 046-245-3311 採用担当者',
+                  '平塚店：TEL 0463-24-1177 採用担当者',
+                  '南足柄店：TEL 0465-74-4141 採用担当者']
+}
+
+/* *******************************************************************
+   経営理念・社訓の変更はこちら
+******************************************************************* */
+var motto_object = {
+    以玉伝心:     [ 
+                    'お客様本位の姿勢', 
+                    'やりがいのある職場',
+                    '地域社会への貢献' 
+                  ],
+    社訓:         [ 'パチンコ店スタッフ',
+                    'お客様には親切に',
+                    '笑顔でサービス',
+                    '心をこめてありがとう'
+                  ],
+    八つの言葉:   [ 'いらっしゃいませ',
+                    'おめでとうございます',
+                    '失礼いたします',
+                    '少しお待ちくださいませ',
+                    'お待たせいたしました',
+                    'ごゆっくりどうぞ',
+                    'ありがとうございます',
+                    'またお越し下さいませ'
+                  ],
+    三つの行動:   [ 
+                    'はずかしがらない。',
+                    'いやがらない。',
+                    'やってみる。'
+                  ]
 }
 
 /* *******************************************************************
@@ -207,12 +283,14 @@ var app = new Vue({
         
         seen_carousel: true,
         seen_news:     true,
-        seen_company:  false,
-        seen_shop:     false,
-        seen_recrit: true,
+        seen_company:  true,
+        seen_motto:    true,
+        seen_shop:     true,
+        seen_recrit:   true,
 
         companyObject: company_object,
-        recritObject: recrit_object,
+        recritObject:  recrit_object,
+        mottoObject:   motto_object,
         historyItems:  history_items,
         imgItems:      img_items,
         storeItems:    store_items,
@@ -231,29 +309,41 @@ var app = new Vue({
     },
     methods: {
         homeBottan: function () {
-            this.seen_company =  false,
-            this.seen_recrit =  false,
+            this.seen_company =  false;
+            this.seen_recrit =  false;
+            this.seen_motto = false;
             this.seen_carousel = true;
             this.seen_news = true;
             this.seen_shop = false;
         },
         companyBottan: function () {
-            this.seen_company =  true,
-            this.seen_recrit =  false,
+            this.seen_company =  true;
+            this.seen_recrit =  false;
+            this.seen_motto = false;
+            this.seen_carousel = false;
+            this.seen_news = false;
+            this.seen_shop = false;
+        },
+        mottoBottan: function () {
+            this.seen_company =  false;
+            this.seen_recrit =  false;
+            this.seen_motto = true;
             this.seen_carousel = false;
             this.seen_news = false;
             this.seen_shop = false;
         },
         recritBottan: function () {
-            this.seen_company =  false,
-            this.seen_recrit =  true,
+            this.seen_company =  false;
+            this.seen_recrit =  true;
+            this.seen_motto = false;
             this.seen_carousel = false;
             this.seen_news = false;
             this.seen_shop = false;
         },
         shopBottan: function () {
-            this.seen_company =  false,
-            this.seen_recrit =  false,
+            this.seen_company =  false;
+            this.seen_recrit =  false;
+            this.seen_motto = false;
             this.seen_carousel = false;
             this.seen_news = false;
             this.seen_shop = true;
@@ -264,3 +354,5 @@ var app = new Vue({
         }
     }
 })
+
+app.seen_carousel = false;

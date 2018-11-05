@@ -141,7 +141,7 @@ var store_objects = {
         電話:       ['046-245-6806'],
         住所:       ['神奈川県厚木市下川入13-1'],
         交通:       ['本厚木駅から車で20分国道129号線山際交差点すぐ近く'],
-        設置台数:   ['CR：304台'],
+        設置台数:   ['スロット：150台'],
         定休日:     ['無し'] ,
         営業形態:   ['全台無制限'],
         営業時間:   ['9：00～23：00'],
@@ -149,25 +149,25 @@ var store_objects = {
     },
     hiratsuka: {
         店舗:       ['平塚店'],
-        電話:       ['0463-24-2678'],
+        電話:       ['0463-24-1177'],
         住所:       ['神奈川県平塚市四之宮2-4-16'],
-        交通:       ['本厚木駅'],
-        設置台数:   ['CR：304台'],
+        交通:       ['国道129号線大野交差点すぐ近く'],
+        設置台数:   ['CR：270台', 'スロット：176台'],
         定休日:     ['無し'] ,
         営業形態:   ['全台無制限'],
         営業時間:   ['9：00～23：00'],
-        駐車場台数: ['230台']
+        駐車場台数: ['330台']
     },
     minamiashigara: {
         店舗:       ['南足柄店'],
         電話:       ['0465-74-4141'],
         住所:       ['神奈川県南足柄市飯沢43-1'],
-        交通:       ['本厚木駅'],
-        設置台数:   ['CR：304台'],
+        交通:       ['大雄山線大雄山駅駅前', '県道74号線飯沢交差点の脇く'],
+        設置台数:   ['CR：272台', 'スロット：88台'],
         定休日:     ['無し'] ,
         営業形態:   ['全台無制限'],
         営業時間:   ['9：00～23：00'],
-        駐車場台数: ['230台']
+        駐車場台数: ['194台']
     }
 }
 
@@ -282,11 +282,11 @@ var app = new Vue({
         company: company_object,
         
         seen_carousel: true,
-        seen_news:     true,
-        seen_company:  true,
-        seen_motto:    true,
-        seen_shop:     true,
-        seen_recrit:   true,
+        seen_news:     false,
+        seen_company:  false,
+        seen_motto:    false,
+        seen_shop:     false,
+        seen_recrit:   false,
 
         companyObject: company_object,
         recritObject:  recrit_object,
@@ -355,4 +355,4 @@ var app = new Vue({
     }
 })
 
-app.seen_carousel = false;
+//app.seen_carousel = false;

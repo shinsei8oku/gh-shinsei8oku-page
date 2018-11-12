@@ -3,7 +3,14 @@
 Vue.component('store-item', {
     props: ['store'],
     // template: '<dd><a :href="store.url"><img :alt="store.text" :src="store.menuFile"></a></dd>'
-    template: '<dd><a :href="store.url">{{ store.text }}</a></dd>'
+    template: '<li><a :href="store.url"><b>{{ store.text }}</b></a></li>'
+})
+
+// サイドバーの関連情報をレンダリング
+Vue.component('etc-item', {
+    props: ['etc'],
+    // template: '<dd><a :href="store.url"><img :alt="store.text" :src="store.menuFile"></a></dd>'
+    template: '<li><a :href="etc.url">{{ etc.text }}</a></li>'
 })
 
 // メニューバーの店舗をレンダリング
@@ -31,7 +38,13 @@ Vue.component('history-item', {
     template: '<dev><dt><time :datetime="history.yearMonth">{{ history.yearMonth }}</time></dt><dd>{{ history.text }}</dd></dev>'
 })
 
-// 経営理念・社訓をレンダリング
+// 経営理念をレンダリング
+Vue.component('vision-item', {
+    props: ['vision',],
+    template: '<table class="table"><tbody><tr v-for="(value, key) in vision"><td>【{{ key }}】</td><td><p v-for="text in value">一、{{ text }}</p></td></tr></tbody></table>'
+})
+
+// 社訓をレンダリング
 Vue.component('motto-item', {
     props: ['motto',],
     template: '<table class="table"><tbody><tr v-for="(value, key) in motto"><td>【{{ key }}】</td><td><p v-for="text in value">一、{{ text }}</p></td></tr></tbody></table>'
@@ -70,11 +83,11 @@ Vue.component('carousel-item', {
      - title：タイトルです。適当に入れてください。
 ******************************************************************* */
 var img_items = [
-    { fileName: 'mise.jpg', activItem: 'active', title: 'First slide', text: 'aaa' },
-    { fileName: 'mise2.jpg', activItem: '', title: 'Second slide', text: 'aaa'   },
-    { fileName: 'mise3.jpg', activItem: '', title: 'Second slide', text: 'aaa'   },
-    { fileName: 'mise4.jpg', activItem: '', title: 'Second slide', text: 'aaa'   },
-    { fileName: 'mise5.jpg', activItem: '', title: 'Third slide', text: 'aaa'   }
+    { fileName: 'mise.jpg', activItem: 'active', title: '店舗外観', text: '' },
+    { fileName: 'mise2.jpg', activItem: '', title: '店内１', text: ''   },
+    { fileName: 'mise3.jpg', activItem: '', title: '店内２', text: ''   },
+    { fileName: 'mise4.jpg', activItem: '', title: '店内３', text: ''   },
+    { fileName: 'mise5.jpg', activItem: '', title: '店内４', text: ''   }
 ]
 
 /* *******************************************************************
@@ -83,10 +96,9 @@ var img_items = [
      - text：表示する内容を記載。
 ******************************************************************* */
 var news_items = [
-    { dateTime: '2018/10/25', text: 'ホームページを' },
-    { dateTime: '2018/10/24', text: 'なななな、なんと' },
-    { dateTime: '2018/10/23', text: 'リニューアル' },
-    { dateTime: '2018/10/22', text: 'しました！！！！！' }
+    { dateTime: '2018/11/12', text: '会社概要を変更致しました。' },
+    { dateTime: '2018/11/12', text: '求人情報を変更致しました。' },
+    { dateTime: '2018/11/12', text: 'ホームページをリニューアル致しました。' }
 ]
 
 /* *******************************************************************
@@ -95,28 +107,38 @@ var news_items = [
 ******************************************************************* */
 var store_items = [
     {
-        text: 'P-WORLD 厚木店',
+        text: 'シンセー八億 厚木店',
         menuFile: './img/menuatsugi1.gif', 
         mapFile: './img/map-atsugi.gif',
         url: 'http://www.p-world.co.jp/kanagawa/sinse-atugi.htm'
     },
     {
-        text: 'P-WORLD 厚木スロット店', 
+        text: 'シンセー八億 厚木スロット店', 
         menuFile: './img/menuatsugislot1.gif',
         mapFile: './img/map-atsugi.gif',
         url: 'http://www.p-world.co.jp/kanagawa/sinse-atugi.htm'
     },
     {
-        text: 'P-WORLD 平塚店',
+        text: 'シンセー八億 平塚店',
         menuFile: './img/menuhiratsuka1.gif',
         mapFile: './img/map-hiratsuka.gif',
         url: 'http://www.p-world.co.jp/kanagawa/sinse.htm'
     },
     {
-        text: 'P-WORLD 南足柄店',
+        text: 'シンセー八億 南足柄店',
         menuFile: './img/menuminami1.gif',
         mapFile: './img/map-minami.gif',
         url: 'http://www.p-world.co.jp/kanagawa/sinse-.htm'
+    }
+]
+
+/* *******************************************************************
+   関連情報はこちら
+******************************************************************* */
+var etc_items = [
+    {
+        text: '',
+        url: '#'
     }
 ]
 
@@ -126,9 +148,9 @@ var store_items = [
 ******************************************************************* */
 var store_objects = {
     atsugi1: {
-        店舗:       ['厚木店'],
+        店舗:       ['シンセー八億 厚木店'],
         電話:       ['046-245-3311'],
-        住所:       ['神奈川県厚木市下川入17-1'],
+        住所:       ['神奈川県厚木市下川入17-1 パチンコ館'],
         交通:       ['本厚木駅から車で20分国道129号線山際交差点すぐ近く'],
         設置台数:   ['CR：304台'],
         定休日:     ['無し'] ,
@@ -137,9 +159,9 @@ var store_objects = {
         駐車場台数: ['230台']
     },
     atsugi2: {
-        店舗:       ['厚木スロット店'],
+        店舗:       ['シンセー八億 厚木スロット店'],
         電話:       ['046-245-6806'],
-        住所:       ['神奈川県厚木市下川入13-1'],
+        住所:       ['神奈川県厚木市下川入17-1 SLOT館'],
         交通:       ['本厚木駅から車で20分国道129号線山際交差点すぐ近く'],
         設置台数:   ['スロット：150台'],
         定休日:     ['無し'] ,
@@ -148,7 +170,7 @@ var store_objects = {
         駐車場台数: ['230台']
     },
     hiratsuka: {
-        店舗:       ['平塚店'],
+        店舗:       ['シンセー八億 平塚店'],
         電話:       ['0463-24-1177'],
         住所:       ['神奈川県平塚市四之宮2-4-16'],
         交通:       ['国道129号線大野交差点すぐ近く'],
@@ -159,7 +181,7 @@ var store_objects = {
         駐車場台数: ['330台']
     },
     minamiashigara: {
-        店舗:       ['南足柄店'],
+        店舗:       ['シンセー八億 南足柄店'],
         電話:       ['0465-74-4141'],
         住所:       ['神奈川県南足柄市飯沢43-1'],
         交通:       ['大雄山線大雄山駅駅前', '県道74号線飯沢交差点の脇く'],
@@ -176,16 +198,22 @@ var store_objects = {
 ******************************************************************* */
 var company_object = {
     本部名称:   ['本部事務センター'],
-    本部所在地: ['神奈川県小田原市南鴨宮3-12-4',
-                 ' 新清第8ビル3階'],
+    本部所在地: [
+                    '神奈川県小田原市南鴨宮3-12-4',
+                    ' 新清第8ビル3階'
+                ],
     本部電話:   ['0465-34-1155'],
-    事業内容:   ['遊技場の経営',
-                 '不動産賃貸業'],
+    事業内容:   [
+                    '遊技場の経営',
+                    '不動産賃貸業'
+                ],
     役員:       ['代表取締役社長 大塚 光二'],
-    従業員数:   ['143名',
-                 ' 男性: 66名',
-                 ' 女性: 77名', 
-                 '内、パートアルバイト・嘱託105名）']
+    従業員数:   [
+                    '107名',
+                    ' 男性: 32名',
+                    ' 女性: 35名', 
+                    '内、パートアルバイト: 40名'
+                ]
 }
 
 var history_items = [
@@ -217,59 +245,87 @@ var history_items = [
    求人情報の変更はこちら
 ******************************************************************* */
 var recrit_object = {
-    募集:       ['a. 準社員', 
-                 'b. パート・アルバイト'],
-    業務内容:   ['パチンコ店スタッフ'],
-    資格:       ['18歳～30歳位迄'],
-    勤務地:     ['シンセー八億厚木店・平塚店・南足柄店のいずれか'],
-    勤務時間:   ['２交代制', 
-                 ' ※ 早番：8:30～16:30 遅番：16:00～24:00）'],
-    給与:       ['a. 準社員 基本時給：1,500円', 
-                 '  -  深夜時給（22:00以降）：1,875円', 
-                 'b. パート・アルバイト 基本時給：1,200円', 
-                 '  -  深夜時給（22:00以降）：1,500円'],
-    待遇:       [ '交通費支給', 
-                  '各種社会保険制度有り',
-                  '制服貸与'],
-    寮設備:     [ 'ワンルーム寮',
-                  ' ※ 約10畳／バス・ウォシュレット付トイレ・エアコン・BS内蔵28インチテレビ・冷蔵庫・寝具・駐車場付'],
-    休日:       [ 'a. 準社員（6日／月・交替制', 
-                  'b. パート・アルバイト（応相談・交替制）'],
-    応募方法:   [ '勤務希望店に電話連絡の後、履歴書持参にてご来店ください。', 
-                  '（当ホームページを見てきた事を告げて下さい。）'],
-    連絡先:     [ '厚木店：TEL 046-245-3311 採用担当者',
-                  '平塚店：TEL 0463-24-1177 採用担当者',
-                  '南足柄店：TEL 0465-74-4141 採用担当者']
+    募集:       [
+                    //'準社員', 
+                    'パート・アルバイト'
+                ],
+    業務内容:   [
+                    'パチンコ店スタッフ'
+                ],
+    資格:       [
+                    '18歳～30歳位迄'
+                ],
+    勤務地:     [
+                    'シンセー八億厚木店・平塚店・南足柄店のいずれか'
+                ],
+    勤務時間:   [
+                    '２交代制', 
+                    ' ※ 早番：8:30～16:30 遅番：16:00～24:00）'
+                ],
+    給与:       [
+                    //'準社員',
+                    //'  -  基本時給：1,200円',
+                    //'  -  深夜時給（22:00以降）：1,500円'
+                    'パート・アルバイト',
+                    '  -  基本時給：1,200円', 
+                    '  -  深夜時給（22:00以降）：1,500円'
+                ],
+    待遇:       [ 
+                    '交通費支給', 
+                    '各種社会保険制度有り',
+                    '制服貸与'
+                ],
+    寮設備:     [ 
+                    'ワンルーム寮',
+                    ' ※ 約10畳／バス・ウォシュレット付トイレ・エアコン・BS内蔵28インチテレビ・冷蔵庫・寝具・駐車場付'
+                ],
+    休日:       [
+                    '準社員（応相談・交替制）', 
+                    'パート・アルバイト（応相談・交替制）'
+                ],
+    応募方法:   [ 
+                    '勤務希望店に電話連絡の後、履歴書持参にてご来店ください。', 
+                    '（当ホームページを見てきた事を告げて下さい。）'
+                ],
+    連絡先:     [ 
+                    '厚木店：TEL 046-245-3311 採用担当者',
+                    '平塚店：TEL 0463-24-1177 採用担当者',
+                    '南足柄店：TEL 0465-74-4141 採用担当者'
+                ]
 }
 
 /* *******************************************************************
    経営理念・社訓の変更はこちら
 ******************************************************************* */
-var motto_object = {
-    以玉伝心:     [ 
-                    'お客様本位の姿勢', 
-                    'やりがいのある職場',
-                    '地域社会への貢献' 
-                  ],
-    社訓:         [ 'パチンコ店スタッフ',
-                    'お客様には親切に',
-                    '笑顔でサービス',
-                    '心をこめてありがとう'
-                  ],
-    八つの言葉:   [ 'いらっしゃいませ',
-                    'おめでとうございます',
-                    '失礼いたします',
-                    '少しお待ちくださいませ',
-                    'お待たせいたしました',
-                    'ごゆっくりどうぞ',
-                    'ありがとうございます',
-                    'またお越し下さいませ'
-                  ],
-    三つの行動:   [ 
-                    'はずかしがらない。',
-                    'いやがらない。',
-                    'やってみる。'
-                  ]
+var vision_object = {
+        以玉伝心:     [ 
+                        'お客様本位の姿勢', 
+                        'やりがいのある職場',
+                        '地域社会への貢献' ,
+                      ]
+}
+
+var motto_object = {       
+        社訓:         [
+                        'お客様には親切に',
+                        '笑顔でサービス',
+                        '心をこめてありがとう'
+                      ],
+        八つの言葉:   [ 'いらっしゃいませ',
+                        'おめでとうございます',
+                        '失礼いたします',
+                        '少しお待ちくださいませ',
+                        'お待たせいたしました',
+                        'ごゆっくりどうぞ',
+                        'ありがとうございます',
+                        'またお越し下さいませ'
+                      ],
+        三つの行動:   [ 
+                        'はずかしがらない。',
+                        'いやがらない。',
+                        'やってみる。'
+                      ]
+
 }
 
 /* *******************************************************************
@@ -282,7 +338,7 @@ var app = new Vue({
         company: company_object,
         
         seen_carousel: true,
-        seen_news:     false,
+        seen_news:     true,
         seen_company:  false,
         seen_motto:    false,
         seen_shop:     false,
@@ -290,11 +346,13 @@ var app = new Vue({
 
         companyObject: company_object,
         recritObject:  recrit_object,
+        visionObject: vision_object,
         mottoObject:   motto_object,
         historyItems:  history_items,
         imgItems:      img_items,
         storeItems:    store_items,
         newsItems:     news_items,
+        etcItems:      etc_items,
 
         // 
         atsugi1: store_objects.atsugi1,
@@ -354,5 +412,3 @@ var app = new Vue({
         }
     }
 })
-
-//app.seen_carousel = false;

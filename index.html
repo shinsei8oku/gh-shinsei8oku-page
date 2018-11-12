@@ -61,69 +61,35 @@
             </div> 
         </header>
         <!--　▲ ヘッダー　 -->
-    
-        <!--　▼ カルーセル　 -->
-        <span v-if="seen_carousel">
-        
-            <div class="container-fluid">
-                <div class="row">
-<!--
-                    <div class="col-sm-3 col-md-3">
-                        <h3>更新情報・お知らせ</h3>
-                        <dl >
-                            <news-item v-for="item in newsItems" :news="item"></news-item>
-                        </dl>
-                    </div>
--->                    
-                    <div class="col-sm-9 col-md-9">
-                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                            <!-- Indicators -->
-                            <ol class="carousel-indicators">
-                                <li v-for="image in imgItems" data-target="#carousel-example-generic" :data-slide-to="image.index" class="image.activItem"></li>
-                            </ol>
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
-                                <carousel-item v-for="item in imgItems " :carousel="item"></carousel-item>
-                            </div>
-                            <!-- Controls -->
-                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-            
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <nav class="sidebar">
-                            <h3>イベント情報</h3>
-                            <ul class="submenu">
-                                <store-item v-for="item in storeItems" :store="item"></store-item>
-                            </ul>
-                        </nav>
-                        <nav class="sidebar">
-                        <h3>関連情報</h3>
-                        <ul class="submenu">
-                         <li><a href="#">関連記事リンク１</a></li>
-                         <li><a href="#">関連記事リンク２</a></li>
-                         <li><a href="#">関連記事リンク３</a></li>
-                         <li><a href="#">関連記事リンク４</a></li>
-                         <li><a href="#">関連記事リンク５</a></li>
-                        </ul>
-                       </nav>
-                    </div>
-                </div>
-            </div>
-        </span>
-        <!--　▲ カルーセル　 -->
 
         <!--　▼ コンテンツ　 -->
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-9 col-md-9">
+
+                        <!--　▼ カルーセル　 -->
+                        <span v-if="seen_carousel">
+                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <ol class="carousel-indicators">
+                                    <li v-for="image in imgItems" data-target="#carousel-example-generic" :data-slide-to="image.index" class="image.activItem"></li>
+                                </ol>
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner" role="listbox">
+                                    <carousel-item v-for="item in imgItems " :carousel="item"></carousel-item>
+                                </div>
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </span>
+                        <!--　▲ カルーセル　 -->
 
                         <!--　▼ ニュース　 -->
                         <span v-if="seen_news">
@@ -143,6 +109,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <company-item :company="companyObject"></company-item>
+                                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d203.58132845642587!2d139.18066508334726!3d35.273635500490265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6019a5a2e4228671%3A0xc614ab1e36a2d844!2z44CSMjUwLTA4NzUg56We5aWI5bed55yM5bCP55Sw5Y6f5biC5Y2X6bSo5a6u77yT5LiB55uu77yR77yS4oiS77yU!5e0!3m2!1sja!2sjp!4v1541387779182" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
                                         </div>
                                         <div class="col-lg-6">
                                             <section  class="history">
@@ -162,6 +129,9 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-lg-12">
+                                            <h3>経営理念</h3>
+                                            <vision-item :vision="visionObject"></vision-item>
+                                            <h3>社訓</h3>
                                             <motto-item :motto="mottoObject"></motto-item>
                                         </div>
                                     </div>
@@ -179,7 +149,8 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="row">
-                                                <img :alt="storeItems[0].text" :src="storeItems[0].mapFile">
+                                                <!-- Google Mapの埋め込みを利用　 -->
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d811.9995444038825!2d139.3510064292302!3d35.50432329052023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601901e9388692c1%3A0xadaf1ea13650a556!2z44K344Oz44K744O85YWr5YSE5Y6a5pyo5bqX!5e0!3m2!1sja!2sjp!4v1541387153583" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -195,7 +166,8 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="row">
-                                                <img :alt="storeItems[1].text" :src="storeItems[1].mapFile">
+                                                <!-- Google Mapの埋め込みを利用　 -->
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d811.9995444038825!2d139.3510064292302!3d35.50432329052023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601901e939b00001%3A0x597bd88fad7fb4d6!2z77yz77ys77yv77y06aSo!5e0!3m2!1sja!2sjp!4v1541386566540" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -211,7 +183,8 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="row">
-                                                <img :alt="storeItems[2].text" :src="storeItems[2].mapFile">
+                                                <!-- Google Mapの埋め込みを利用　 -->
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1627.1354512508367!2d139.3524838279687!3d35.348922704065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6019acc433777559%3A0x46e9ba72172d959c!2z44CSMjU0LTAwMTQg56We5aWI5bed55yM5bmz5aGa5biC5Zub5LmL5a6u77yS5LiB55uu77yU4oiS77yR77yW!5e0!3m2!1sja!2sjp!4v1541387285000" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -227,7 +200,8 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="row">
-                                                <img :alt="storeItems[3].text" :src="storeItems[3].mapFile">
+                                                <!-- Google Mapの埋め込みを利用　 -->
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d406.93476647279726!2d139.1018211932189!3d35.31894658723233!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6019a0e9d448e5ed%3A0x5d106d2f1dcc4275!2z44CSMjUwLTAxMjIg56We5aWI5bed55yM5Y2X6Laz5p-E5biC6aOv5rKi77yU77yT4oiS77yR!5e0!3m2!1sja!2sjp!4v1541387403063" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -264,18 +238,15 @@
                         <nav class="sidebar">
                             <h3>イベント情報</h3>
                             <ul class="submenu">
+                                <p>- <b>P-WORLD.</b></p>
                                 <store-item v-for="item in storeItems" :store="item"></store-item>
                             </ul>
                         </nav>
                         <nav class="sidebar">
                         <h3>関連情報</h3>
-                        <ul class="submenu">
-                         <li><a href="#">関連記事リンク１</a></li>
-                         <li><a href="#">関連記事リンク２</a></li>
-                         <li><a href="#">関連記事リンク３</a></li>
-                         <li><a href="#">関連記事リンク４</a></li>
-                         <li><a href="#">関連記事リンク５</a></li>
-                        </ul>
+                            <ul class="submenu">
+                                <etc-item v-for="item in etcItems" :etc="item"></etc-item>
+                            </ul>
                        </nav>
                     </div>
                 </div>

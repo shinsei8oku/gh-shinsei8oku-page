@@ -1,1 +1,9 @@
-# gh-shinsei8oku-page
+# 株式会社新清
+
+## 文字の編集をする
+
+index.js の該当箇所を修正をしてください。
+
+## レイアウトを編集する
+
+index.html or index.css の該当箇所を修正してください。
